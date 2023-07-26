@@ -5,6 +5,7 @@ import com.xuecheng.base.model.PageResult;
 import com.xuecheng.content.model.dto.CourseCategoryTreeDto;
 import com.xuecheng.content.model.dto.QueryCourseParamsDto;
 import com.xuecheng.content.model.po.CourseBase;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
  * @description 课程基本信息管理业务接口
  * @date 2022/9/6 21:42
  */
+
 
 public interface CourseCategoryService {
 

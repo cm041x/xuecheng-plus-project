@@ -1,11 +1,19 @@
 package com.xuecheng.content.api;
 
+import com.xuecheng.base.exception.ValidationGroups;
+import com.xuecheng.content.mapper.CourseBaseMapper;
+import com.xuecheng.content.model.dto.AddCourseDto;
+import com.xuecheng.content.model.dto.CourseBaseInfoDto;
 import com.xuecheng.content.model.dto.CourseCategoryTreeDto;
 //import com.xuecheng.content.service.CourseCategoryService;
+import com.xuecheng.content.model.dto.EditCourseDto;
+import com.xuecheng.content.service.CourseBaseInfoService;
 import com.xuecheng.content.service.CourseCategoryService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,10 +29,41 @@ public class CourseCategoryController {
     @Autowired
     CourseCategoryService courseCategoryService;
 
+    @Autowired
+    CourseBaseInfoService courseBaseInfoService;
 
+    @ApiOperation("课程查询接口")
     @GetMapping("/course-category/tree-nodes")
     public List<CourseCategoryTreeDto> queryTreeNodes() {
         return courseCategoryService.queryTreeNodes("1");
     }
 
+    @ApiOperation("新增课程")
+    @PostMapping("/course")
+    public CourseBaseInfoDto createCourseBase(@RequestBody @Validated(ValidationGroups.Inster.class) AddCourseDto addCourseDto){
+        //获取到用户所属机构的id
+        Long companyId = 1232141425L;
+        CourseBaseInfoDto courseBase = courseBaseInfoService.createCourseBase(companyId, addCourseDto);
+        return courseBase;
+    }
+
+    @ApiOperation("根据id查询课程信息")
+    @GetMapping("/course/{courseId}")
+    public CourseBaseInfoDto getCourseBaseById(@PathVariable Long courseId){
+
+        CourseBaseInfoDto courseBaseInfo = courseBaseInfoService.getCourseBaseInfo(courseId);
+
+        return courseBaseInfo;
+    }
+
+
+    @ApiOperation("修改课程信息")
+    @PutMapping("/course")
+    public CourseBaseInfoDto modifyCourseBase(@RequestBody/*将前端传的json转为对象*/ @Validated({ValidationGroups.Update.class}) EditCourseDto editCourseDto){
+
+        //机构id，由于认证系统没有上线暂时硬编码
+        Long companyId = 1232141425L;
+        CourseBaseInfoDto courseBaseInfoDto = courseBaseInfoService.updateCourseBase(1232141425L, editCourseDto);
+        return courseBaseInfoDto;
+    }
 }

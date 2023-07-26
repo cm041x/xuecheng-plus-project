@@ -8,7 +8,9 @@ import com.xuecheng.content.model.dto.QueryCourseParamsDto;
 import com.xuecheng.content.model.po.CourseBase;
 import com.xuecheng.content.service.CourseCategoryService;
 import io.swagger.annotations.Api;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,8 @@ import java.util.stream.Stream;
  * @date 2022/9/6 21:42
  */
 
+@Slf4j
+@Service
 public class CourseCategoryServiceImpl implements CourseCategoryService {
 
 
